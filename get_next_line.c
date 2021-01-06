@@ -6,13 +6,12 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 00:06:05 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 00:57:18 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "get_next_line.h"
-#include <stdio.h>
 
 int		read_file(t_gnl *info, t_lst **list)
 {
@@ -58,12 +57,7 @@ int		get_next_line(int fd, char **line)
 		info->len = -1;
 	}
 	if((ret = read_file(info, &list)) < 0 || !(*line = lst_to_str(list)))
-	{
-		return (-1);
-	}
-	//if (!(*line = lst_to_str(list)))
-	//	return (-1);
+		ret = -1;
 	ft_lstclear(&list, &free);
-	//printf("%s", *line);
 	return (ret);
 }

@@ -6,14 +6,12 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 22:12:04 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/06 23:51:29 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 00:09:13 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-
-//int		close(t_lst **ancre)
 
 int		lst_pushback(t_lst **ancre, void *c)
 {
