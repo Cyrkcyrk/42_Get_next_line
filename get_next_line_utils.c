@@ -6,11 +6,14 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 22:12:04 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/06 03:02:17 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/06 23:51:29 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+
+//int		close(t_lst **ancre)
 
 int		lst_pushback(t_lst **ancre, void *c)
 {
@@ -33,6 +36,22 @@ int		lst_pushback(t_lst **ancre, void *c)
 	return (1);
 }
 
+void ft_lstclear(t_lst **lst, void (*del)(void*))
+{
+	t_lst *prev;
+	t_lst *maillon;
+
+	maillon = *lst;
+	while (maillon != NULL)
+	{
+		prev = maillon;
+		maillon = maillon->next;
+		(*del)(prev->content);
+		free(prev);
+	}
+	*lst = NULL;
+}
+
 char	*lst_to_str(t_lst *ancre)
 {
 	int		i;
@@ -49,12 +68,11 @@ char	*lst_to_str(t_lst *ancre)
 	if (!(ret = malloc(sizeof(char) * (i + 1))))
 		return (NULL);
 	i = -1;
-	while (ancre)
+	tmp = ancre;
+	while (tmp)
 	{
-		ret[++i] = (char)(ancre->content);
-		tmp = ancre;
-		ancre = ancre->next;
-		free(tmp);
+		ret[++i] = *((char*)(tmp->content));
+		tmp = tmp->next;
 	}
 	ret[i + 1] = '\0';
 	return (ret);
