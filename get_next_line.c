@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 20:19:39 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 23:34:53 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,19 @@ int		read_file(t_gnl *info, t_lst **list)
 
 int		get_next_line(int fd, char **line)
 {
-	static t_gnl	*info = 0;
+	static t_gnl	info = { .pos = -3 };
 	t_lst			*list;
 	int				ret;
 
 	list = NULL;
-	if (!info)
+	if (info.pos == -3)
 	{
-		if (!(info = malloc(sizeof(t_gnl))))
-			return (-1);
-		info->pos = -2;
-		info->line_nb = 0;
-		info->fd = fd;
-		info->len = -1;
+		info.pos = -2;
+		info.line_nb = 0;
+		info.fd = fd;
+		info.len = -1;
 	}
-	if ((ret = read_file(info, &list)) < 0)
+	if ((ret = read_file(&info, &list)) < 0)
 		ret = -1;
 	if (!(*line = lst_to_str(list)))
 		ret = -1;
