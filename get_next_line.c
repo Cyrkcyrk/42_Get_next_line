@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 23:34:53 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 23:42:42 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int		get_next_line(int fd, char **line)
 	t_lst			*list;
 	int				ret;
 
+	if (!line || fd < 0)
+		return (-1);
 	list = NULL;
 	if (info.pos == -3)
 	{
