@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 00:57:18 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 20:19:39 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int		read_file(t_gnl *info, t_lst **list)
 {
 	char *c;
 
-	while(info->len != 0)
+	while (info->len != 0)
 	{
 		if ((info->pos) >= -1)
-			while(++(info->pos) < info->len)
+			while (++(info->pos) < info->len)
 			{
-				if (info->buf[info->pos] == '\n' && info->pos < info->len )
+				if (info->buf[info->pos] == '\n' && info->pos < info->len)
 					return (1);
-				if((info->buf[info->pos] == '\n' && info->pos == info->len &&
+				if ((info->buf[info->pos] == '\n' && info->pos == info->len &&
 					info->len < BUFFER_SIZE) || info->len == 0)
 					return (0);
 				if (!(c = malloc(sizeof(char))))
@@ -37,7 +37,7 @@ int		read_file(t_gnl *info, t_lst **list)
 			return (-1);
 		info->pos = -1;
 	}
-	return(0);
+	return (0);
 }
 
 int		get_next_line(int fd, char **line)
@@ -45,7 +45,7 @@ int		get_next_line(int fd, char **line)
 	static t_gnl	*info = 0;
 	t_lst			*list;
 	int				ret;
-	
+
 	list = NULL;
 	if (!info)
 	{
@@ -56,7 +56,9 @@ int		get_next_line(int fd, char **line)
 		info->fd = fd;
 		info->len = -1;
 	}
-	if((ret = read_file(info, &list)) < 0 || !(*line = lst_to_str(list)))
+	if ((ret = read_file(info, &list)) < 0)
+		ret = -1;
+	if (!(*line = lst_to_str(list)))
 		ret = -1;
 	ft_lstclear(&list, &free);
 	return (ret);

@@ -6,12 +6,11 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 22:12:04 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 00:09:13 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/07 20:21:34 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int		lst_pushback(t_lst **ancre, void *c)
 {
@@ -19,7 +18,7 @@ int		lst_pushback(t_lst **ancre, void *c)
 	t_lst *tmp;
 
 	if (!(new = malloc(sizeof(t_lst))))
-		return(0);
+		return (0);
 	new->next = NULL;
 	new->content = c;
 	if (!*ancre)
@@ -34,7 +33,7 @@ int		lst_pushback(t_lst **ancre, void *c)
 	return (1);
 }
 
-void ft_lstclear(t_lst **lst, void (*del)(void*))
+void	ft_lstclear(t_lst **lst, void (*del)(void*))
 {
 	t_lst *prev;
 	t_lst *maillon;
@@ -58,7 +57,7 @@ char	*lst_to_str(t_lst *ancre)
 
 	tmp = ancre;
 	i = 0;
-	while(tmp)
+	while (tmp)
 	{
 		i++;
 		tmp = tmp->next;
