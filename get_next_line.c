@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/08 21:21:39 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/08 22:17:00 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		get_next_line(int fd, char **line)
 	info.line_nb++;
 	if ((ret = read_file(&info, &list)) < 0)
 		ret = -1;
-	if (!(*line = lst_to_str(list)))
+	if (ret != -1 && !(*line = lst_to_str(list)))
 		ret = -1;
 	ft_lstclear(&list, &free);
 	return (ret);
