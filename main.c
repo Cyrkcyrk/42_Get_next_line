@@ -6,13 +6,20 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 00:04:03 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 23:45:15 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/08 01:14:41 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <stdio.h>
 #include "get_next_line.h"
+
+void	doprint(int out, char **str, int line)
+{
+	printf("(LINE %i) [OUT %i] |%s|\n", line, out, *str);
+	free(*str);
+	*str = NULL;
+}
 
 int main(int ac, char **av)
 {
@@ -29,9 +36,11 @@ int main(int ac, char **av)
 	i = 0;
 	while ((t = get_next_line(fd, &ret)) > 0)
 	{
-		printf("%2d - %d: %s\n", i, t, ret);
+		doprint(t, &ret, i);
+/*		printf("%2d - %d: %s\n", i, t, ret);
 		if (ret)
 			free(ret);
+*/
 		i++;
 	}
 	if (t == -1)
