@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/09 18:36:13 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/09 20:54:21 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	fill_struct(t_gnl *info)
 
 int		get_next_line(int fd, char **line)
 {
-	static t_gnl	info[MAX_FD] = {{.buf = "", .pos = -3, .len = -1, .fd = -1}};
+	static t_gnl	info[MAX_FD] = {{.buf = "", .pos = -3, .len = -1,
+									.fd = -1}};
 	t_lst			*list;
 	int				ret;
 

@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 00:04:03 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/09 19:54:51 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/01/09 20:55:31 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int main(int ac, char **av)
 		while (++i < ac)
 		{
 			if ((fd[i - 1] = open(av[i], O_RDONLY)) < 0)
-				if ((fd[i - 1] = atoi(av[i])) < 0)
+				if ((fd[i - 1] = atoi(av[i])) == 0)
 					return (-1);
 		}
 	}
