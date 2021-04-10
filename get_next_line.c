@@ -65,7 +65,7 @@ int		get_next_line(int fd, char **line)
 	static t_gnl	info = { .pos = -3 };
 	int				ret;
 
-	if (!line || fd < 0)
+	if (!line || fd < 0 || BUFFER_SIZE <= 0)
 		return (-1);
 	*line = NULL;
 	if (info.pos == -3)
