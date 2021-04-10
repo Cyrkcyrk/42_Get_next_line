@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:38:01 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/04/10 15:57:45 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/04/10 19:45:31 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct	s_gnl
 	char	buf[BUFFER_SIZE];
 	int		pos;
 	int		len;
-	int		line_nb;
 	int		fd;
 }				t_gnl;
 typedef struct	s_lst
