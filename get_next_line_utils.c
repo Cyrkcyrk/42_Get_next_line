@@ -6,71 +6,41 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 22:12:04 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/01/07 20:21:34 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/04/10 15:58:25 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		lst_pushback(t_lst **ancre, void *c)
-{
-	t_lst *new;
-	t_lst *tmp;
-
-	if (!(new = malloc(sizeof(t_lst))))
-		return (0);
-	new->next = NULL;
-	new->content = c;
-	if (!*ancre)
-		*ancre = new;
-	else
-	{
-		tmp = *ancre;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	return (1);
-}
-
-void	ft_lstclear(t_lst **lst, void (*del)(void*))
-{
-	t_lst *prev;
-	t_lst *maillon;
-
-	maillon = *lst;
-	while (maillon != NULL)
-	{
-		prev = maillon;
-		maillon = maillon->next;
-		(*del)(prev->content);
-		free(prev);
-	}
-	*lst = NULL;
-}
-
-char	*lst_to_str(t_lst *ancre)
+int				ft_strlen(char *str)
 {
 	int		i;
-	t_lst	*tmp;
-	char	*ret;
 
-	tmp = ancre;
 	i = 0;
-	while (tmp)
+	while (*str)
 	{
 		i++;
-		tmp = tmp->next;
+		str++;
 	}
-	if (!(ret = malloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	i = -1;
-	tmp = ancre;
-	while (tmp)
-	{
-		ret[++i] = *((char*)(tmp->content));
-		tmp = tmp->next;
-	}
-	ret[i + 1] = '\0';
-	return (ret);
+	return (i);
+}
+
+unsigned int    ft_strlcat(char *dest, char *src, unsigned int size)
+{
+    unsigned int i;
+    unsigned int len_src;
+    unsigned int len_dest;
+
+    len_src = ft_strlen(src);
+    len_dest = ft_strlen(dest);
+    i = 0;
+    if (len_dest >= size)
+        return (len_src + size);
+    while (src[i] != '\0' && len_dest + i < size - 1)
+    {
+        dest[len_dest + i] = src[i];
+        i++;
+    }
+    dest[len_dest + i] = '\0';
+    return (len_src + len_dest);
 }
