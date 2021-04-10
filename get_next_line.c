@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/04/10 17:48:22 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/04/10 17:54:56 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int		get_next_line(int fd, char **line)
 	ret = read_file(&info, line);
 	if (ret != -1)
 		return (ret);
-	//free(*line);
+	if (*line)
+		free(*line);
+	*line = NULL;
 	return (-1);
 }
