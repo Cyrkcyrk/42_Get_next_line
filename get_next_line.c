@@ -6,7 +6,7 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/04/10 16:00:18 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/04/10 16:29:02 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		read_file(t_gnl *info, char** line)
 int		get_next_line(int fd, char **line)
 {
 	static t_gnl	info = { .pos = -3 };
-	int				ret;
 	
 	if (!line || fd < 0)
 		return (-1);
