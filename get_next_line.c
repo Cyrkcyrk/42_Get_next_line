@@ -6,19 +6,17 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/05 16:33:32 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/04/10 16:29:02 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/04/10 17:11:18 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "get_next_line.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <fcntl.h>
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
-int			ft_strlen(char *str);
 
 char*	 concat_str(char** line, char *second, unsigned int size)
 {
@@ -52,7 +50,8 @@ int		read_file(t_gnl *info, char** line)
 			{
 				if (info->buf[info->pos] == '\n')
 				{
-					concat_str(line, &(info->buf[start]), (info->pos - start));
+					if (!concat_str(line, &(info->buf[start]), (info->pos - start)))
+						return (-1);
 					return(1);
 				}
 			}
@@ -61,7 +60,8 @@ int		read_file(t_gnl *info, char** line)
 			return (-1);
 		info->pos = -1;
 	}
-	concat_str(line, &(info->buf[start]), (info->pos - start));
+	if(!concat_str(line, &(info->buf[start]), (info->pos - start)))
+		return (-1);
 	return (0);
 }
 
@@ -71,9 +71,6 @@ int		get_next_line(int fd, char **line)
 	
 	if (!line || fd < 0)
 		return (-1);
-	if (!(*line = malloc(sizeof(char))))
-		return (-1);
-	*line[0] = '\0';
 	if (info.pos == -3)
 	{
 		info.pos = -1;
@@ -83,6 +80,9 @@ int		get_next_line(int fd, char **line)
 	}
 	if (info.fd != fd)
 		return (-1);
+	if (!(*line = malloc(sizeof(char))))
+		return (-1);
+	*line[0] = '\0';
 	info.line_nb++;
 	return (read_file(&info, line));
 }
