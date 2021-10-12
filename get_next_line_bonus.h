@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
+# define MAX_FD 1024
+
 typedef struct	s_gnl {
 	int		fd;
 	char	str[BUFFER_SIZE + 1];
