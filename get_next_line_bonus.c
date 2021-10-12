@@ -14,8 +14,8 @@
 
 void	init_struct(t_gnl *info, int fd)
 {
-	int i;
-	
+	int	i;
+
 	if (info[0].pos == -100)
 	{
 		i = -1;
@@ -36,10 +36,11 @@ char	*concat_str(char **str, char c)
 {
 	char	*ret;
 	int		len;
-	
+
 	len = ft_strlen(*str);
-	ret = (char*)malloc((len + 2) * sizeof(char));
-	if (ret == NULL){
+	ret = malloc((len + 2) * sizeof(char));
+	if (ret == NULL)
+	{
 		free(*str);
 		*str = NULL;
 		return (NULL);
@@ -53,22 +54,23 @@ char	*concat_str(char **str, char c)
 	return (ret);
 }
 
-int		read_file(t_gnl *inf, char **ret)
+int	read_file(t_gnl *inf, char **ret)
 {
 	while (inf->len != 0)
 	{
-		while (inf->pos >= 0 && inf->pos < inf->len 
+		while (inf->pos >= 0 && inf->pos < inf->len
 			&& inf->str[inf->pos] != '\n' && inf->str[inf->pos] != '\0')
 		{
 			inf->written = 1;
-			if (concat_str(ret, inf->str[inf->pos]) == NULL) 
+			if (concat_str(ret, inf->str[inf->pos]) == NULL)
 				return (-1);
 			inf->pos += 1;
 		}
-		if (inf->pos >= 0 && inf->pos < inf->len &&
-			(inf->str[inf->pos] == '\n' || inf->str[inf->pos] == '\0'))
+		if (inf->pos >= 0 && inf->pos < inf->len
+			&& (inf->str[inf->pos] == '\n' || inf->str[inf->pos] == '\0'))
 			return (1);
-		if ((inf->len = read(inf->fd, inf->str, BUFFER_SIZE)) < 0)
+		inf->len = read(inf->fd, inf->str, BUFFER_SIZE);
+		if (inf->len < 0)
 			inf->len = 0;
 		if (inf->len < BUFFER_SIZE)
 			inf->eof = 0;
@@ -77,24 +79,24 @@ int		read_file(t_gnl *inf, char **ret)
 	return (0);
 }
 
-char*	get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static t_gnl	info[MAX_FD] = {{ .pos = -100}};
+	static t_gnl	info[MAX_FD] = {{.pos = -100}};
 	char			*ret;
 	int				val;
 
 	init_struct(info, fd);
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd != info[fd].fd)
 		return (NULL);
-	ret = (char*)malloc(sizeof(char));
+	ret = malloc(sizeof(char));
 	if (ret == NULL)
 		return (NULL);
 	ret[0] = '\0';
 	val = read_file(&(info[fd]), &ret);
 	if (val == 1)
-		if (concat_str(&ret, info[fd].str[info[fd].pos++]) == NULL) 
+		if (concat_str(&ret, info[fd].str[info[fd].pos++]) == NULL)
 			return (NULL);
-	if (val == 0 && info[fd].eof == 0 && info[fd].pos >= info[fd].len 
+	if (val == 0 && info[fd].eof == 0 && info[fd].pos >= info[fd].len
 		&& info[fd].written == 0)
 		val = -1;
 	if (val != -1)
