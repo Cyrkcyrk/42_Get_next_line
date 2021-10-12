@@ -6,9 +6,12 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:34:59 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/10/11 09:35:02 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/10/12 11:20:39 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#IFNDEF GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 typedef struct	s_gnl {
 	int		fd;
@@ -26,3 +29,5 @@ void	init_struct(t_gnl *info, int fd);
 char*	concat_str(char **str, char c);
 int		read_file(t_gnl *inf, char **ret);
 char*	get_next_line(int fd);
+
+#ENDIF

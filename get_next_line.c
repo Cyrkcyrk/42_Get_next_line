@@ -6,17 +6,13 @@
 /*   By: ckasyc <ckasyc@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/11 09:34:48 by ckasyc            #+#    #+#             */
-/*   Updated: 2021/10/11 09:34:51 by ckasyc           ###   ########.fr       */
+/*   Updated: 2021/10/12 11:20:28 by ckasyc           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <unistd.h>
 #include <stdlib.h>
-
-#include <stdio.h>
-#include <errno.h> 
-#include <string.h>
 
 void	init_struct(t_gnl *info, int fd)
 {
@@ -55,8 +51,6 @@ int		read_file(t_gnl *inf, char **ret)
 {
 	while (inf->len != 0)
 	{
-		// printf("RENTRER\n");
-		// printf("%d\n", inf->pos);
 		while (inf->pos >= 0 && inf->pos < inf->len 
 			&& inf->str[inf->pos] != '\n' && inf->str[inf->pos] != '\0')
 		{
@@ -119,7 +113,6 @@ char*	get_next_line(int fd)
 		return (NULL);
 	ret[0] = '\0';
 	val = read_file(&info, &ret);
-	// printf("val : %d len : %d pos : %d\n", val, info.len, info.pos);
 	if (val == 1)
 		if (concat_str(&ret, info.str[info.pos++]) == NULL) 
 			return (NULL);
