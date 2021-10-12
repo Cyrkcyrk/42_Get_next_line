@@ -15,6 +15,20 @@
 #include <stdlib.h>
 
 #include <stdio.h>
+#include <errno.h> 
+#include <string.h>
+
+void	init_struct(t_gnl *info, int fd)
+{
+	if (info->pos == -100)
+	{
+		info->pos = -2;
+		info->fd = fd;
+		info->len = -1;
+		info->eof = 1;
+	}
+	info->written = 0;
+}
 
 char*	concat_str(char **str, char c)
 {
@@ -23,68 +37,96 @@ char*	concat_str(char **str, char c)
 	
 	len = ft_strlen(*str);
 	ret = (char*)malloc((len + 2) * sizeof(char));
-	if (ret == NULL)
+	if (ret == NULL){
+		free(*str);
+		*str = NULL;
 		return (NULL);
+	}
 	ret[0] = '\0';
 	ft_strlcat(ret, *str, len + 1);
 	ret[len] = c;
 	ret[len + 1] = '\0';
 	free(*str);
 	*str = ret;
-	// printf("%d - (%s) [%c|%d]\n", len, ret, c, c);
 	return (ret);
 }
 
-char*	read_file(t_gnl *inf, char **ret)
+int		read_file(t_gnl *inf, char **ret)
 {
 	while (inf->len != 0)
 	{
-		// printf("INFO pos %d | len %d\n", inf->pos, inf->len);
-		if (inf->pos >= -1 && inf->pos < inf->len)
+		// printf("RENTRER\n");
+		// printf("%d\n", inf->pos);
+		while (inf->pos >= 0 && inf->pos < inf->len 
+			&& inf->str[inf->pos] != '\n' && inf->str[inf->pos] != '\0')
 		{
-			while (inf->str[++(inf->pos)] != '\n' && inf->pos < inf->len)
-				if (concat_str(ret, inf->str[inf->pos]) == NULL) 
-				{
-					// printf("LIGNE 48\n");
-					return (NULL);
-				}
-			if (inf->str[(inf->pos)] == '\n' || (
-				inf->pos < inf->len && inf->str[(inf->pos)] == '\0'))
-			{
-				// printf("STR[POS]: [%d|%c]\n", inf->str[(inf->pos)], inf->str[(inf->pos)]);
-				return (*ret);
-			}
+			inf->written = 1;
+			if (concat_str(ret, inf->str[inf->pos]) == NULL) 
+				return (-1);
+			inf->pos += 1;
 		}
-		if ((inf->len = read(inf->fd, inf->str, BUFFER_SIZE)) <= 0)
-		{
-			// printf("LIGNE 58\n");
-			return (NULL);
-		}
-		inf->pos = -1;
+		if (inf->pos >= 0 && inf->pos < inf->len &&
+			(inf->str[inf->pos] == '\n' || inf->str[inf->pos] == '\0'))
+			return (1);
+		if ((inf->len = read(inf->fd, inf->str, BUFFER_SIZE)) < 0)
+			inf->len = 0;
+		if (inf->len < BUFFER_SIZE)
+			inf->eof = 0;
+		inf->pos = 0;
 	}
-	// printf("end while\n");
-	// printf("INFO pos %d | len %d\n", inf->pos, inf->len);
-	return (NULL);
+	return (0);
 }
 
+int		read_file2(t_gnl *inf, char **ret)
+{
+	while ((inf->len != 0 || inf->pos < inf->len))
+	{
+		if (inf->pos >= 0)
+		{
+			inf->written = 1;
+			while (inf->pos < inf->len)
+			{
+				if (inf->str[(inf->pos)] == '\n' || inf->str[(inf->pos)] == '\0')
+				{
+					inf->pos += 1;
+					return (1);
+				}
+				if (concat_str(ret, inf->str[inf->pos]) == NULL) 
+					return (-1);
+				inf->pos += 1;
+			}
+		}
+		if ((inf->len = read(inf->fd, inf->str, BUFFER_SIZE)) < 0)
+			inf->len = 0;
+		if (inf->len < BUFFER_SIZE)
+			inf->eof = -1;
+		inf->pos = 0;
+	}
+	return (0);
+}
 
 char*	get_next_line(int fd)
 {
 	static t_gnl	info = { .pos = -100};
 	char			*ret;
+	int				val;
 
-	if (info.pos == -100)
-	{
-		info.pos = -2;
-		info.fd = fd;
-		info.len = -1;
-		
-	}
+	init_struct(&info, fd);
 	if (fd < 0 || BUFFER_SIZE <= 0 || fd != info.fd)
 		return (NULL);
 	ret = (char*)malloc(sizeof(char));
 	if (ret == NULL)
 		return (NULL);
 	ret[0] = '\0';
-	return read_file(&info, &ret);
+	val = read_file(&info, &ret);
+	// printf("val : %d len : %d pos : %d\n", val, info.len, info.pos);
+	if (val == 1)
+		if (concat_str(&ret, info.str[info.pos++]) == NULL) 
+			return (NULL);
+	if (val == 0 && info.eof == 0 && info.pos >= info.len && info.written == 0)
+		val = -1;
+	if (val != -1)
+		return (ret);
+	free(ret);
+	return (NULL);
 }
