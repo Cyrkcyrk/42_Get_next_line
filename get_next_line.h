@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-typedef struct	s_gnl {
+typedef struct s_gnl {
 	int		fd;
 	char	str[BUFFER_SIZE + 1];
 	int		pos;
@@ -27,9 +27,9 @@ typedef struct	s_gnl {
 int				ft_strlen(char *str);
 unsigned int	ft_strlcat(char *dest, char *src, unsigned int size);
 
-void	init_struct(t_gnl *info, int fd);
-char*	concat_str(char **str, char c);
-int		read_file(t_gnl *inf, char **ret);
-char*	get_next_line(int fd);
+void			init_struct(t_gnl *info, int fd);
+char			*concat_str(char **str, char c);
+int				read_file(t_gnl *inf, char **ret);
+char			*get_next_line(int fd);
 
 #endif

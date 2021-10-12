@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int				ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
@@ -27,9 +27,9 @@ int				ft_strlen(char *str)
 
 unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
 {
-	unsigned int i;
-	unsigned int len_src;
-	unsigned int len_dest;
+	unsigned int	i;
+	unsigned int	len_src;
+	unsigned int	len_dest;
 
 	len_src = ft_strlen(src);
 	len_dest = ft_strlen(dest);
